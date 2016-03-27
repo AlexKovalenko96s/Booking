@@ -1,11 +1,13 @@
 package ua.kas.bookin;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -13,12 +15,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.stage.Stage;
 
 public class Controller implements Initializable{
 	
@@ -45,7 +52,7 @@ public class Controller implements Initializable{
 	@FXML
 	private ComboBox<String>city_in_search1;
 	@FXML
-	private ComboBox<String>date_search1;
+	private DatePicker date_search1;
 	static String city_out1 = "";
 	static String city_in1 = "";
 	ObservableList<String>city_out2;
@@ -76,10 +83,9 @@ public class Controller implements Initializable{
 		city_in2 = FXCollections.observableArrayList(
 				"Одеса","Київ","Львів","Харків","Богатое");
 		date2 = FXCollections.observableArrayList(
-				"25.03.2016","26.03.2016","27.03.2016","28.03.2016","29.03.2016");
+				"2016-03-27","2016-03-26","2016-03-25","2016-03-28","2016-03-29");
 		city_out_search1.setItems(city_out2);
 		city_in_search1.setItems(city_in2);
-		date_search1.setItems(date2);
 	}
 	
 	public void search() throws SQLException{
@@ -90,6 +96,7 @@ public class Controller implements Initializable{
 			public void handle(ActionEvent arg0) {
 
 				try {
+					String s3 = "1";
 					s11 = city_out_search1.getEditor().getText();
 					s22 = city_in_search1.getEditor().getText();
 					s33 = date_search1.getEditor().getText();
@@ -97,8 +104,12 @@ public class Controller implements Initializable{
 					ResultSet myRs = null;
 					String s1 = city_out_search1.getValue();
 					String s2 = city_in_search1.getValue();
-					String s3 = date_search1.getValue();
+					try{
+						s3 = date_search1.getValue().toString();
+					}catch(Exception e){}
+					
 					java.sql.PreparedStatement myStmt;
+					
 					
 					if(city_out2.contains(s1) || city_out2.contains(s11)){
 						myStmt = myConn.prepareStatement("select * from train where city_out =?");
@@ -129,7 +140,7 @@ public class Controller implements Initializable{
 					if(date2.contains(s3) || date2.contains(s33)){
 						myStmt = myConn.prepareStatement("select * from train where date=?");
 						s3 = s33;
-						myStmt.setString(1, s3);
+						myStmt.setString(1, s3);						
 						
 						myRs = myStmt.executeQuery();
 						listView.getItems().clear();
@@ -141,8 +152,8 @@ public class Controller implements Initializable{
 					
 					if((date2.contains(s3) || date2.contains(s33)) && (city_out2.contains(s1) || city_out2.contains(s11))){
 						myStmt = myConn.prepareStatement("select * from train where date=? and city_out=?");
-						s3 = s33;
 						s1 = s11;
+						s3 = s33;
 						myStmt.setString(1, s3);
 						myStmt.setString(2, s1);
 						
@@ -156,8 +167,8 @@ public class Controller implements Initializable{
 					
 					if((date2.contains(s3) || date2.contains(s33))&& (city_in2.contains(s2) || city_in2.contains(s22))){
 						myStmt = myConn.prepareStatement("select * from train where date=? and city_in=?");
-						s3 = s33;
 						s2 = s22;
+						s3 = s33;
 						myStmt.setString(1, s3);
 						myStmt.setString(2, s2);
 						
@@ -184,7 +195,7 @@ public class Controller implements Initializable{
 						}
 					}
 					
-					if((date2.contains(s3) || date2.contains(s33)) && (city_out2.contains(s1) || city_out2.contains(s11)) && (city_in2.contains(s2) || city_in2.contains(s22))){
+					if((date2.contains(s3) || (date2.contains(s33)) && (city_out2.contains(s1) || city_out2.contains(s11)) && (city_in2.contains(s2) || city_in2.contains(s22)))){
 						myStmt = myConn.prepareStatement("select * from train where date=? and city_out=? and city_in=?");
 						s1 = s11;
 						s2 = s22;
@@ -272,5 +283,13 @@ public class Controller implements Initializable{
 				city_out1 = "";
 			}
 		}		
+	}
+	
+	public void booking(ActionEvent event) throws IOException{
+		Scene booking = new Scene(FXMLLoader.load(getClass().getResource("booking.fxml")));
+		booking.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		app_stage.setScene(booking);
+		app_stage.show();
 	}
 }
