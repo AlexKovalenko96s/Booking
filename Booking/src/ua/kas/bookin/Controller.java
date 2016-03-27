@@ -8,9 +8,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -18,6 +22,10 @@ import javafx.scene.control.SelectionMode;
 
 public class Controller implements Initializable{
 	
+	@FXML
+	Button reset;
+	@FXML
+	Button search;
 	@FXML
 	Label date;
 	@FXML
@@ -40,10 +48,16 @@ public class Controller implements Initializable{
 	private ComboBox<String>date_search1;
 	static String city_out1 = "";
 	static String city_in1 = "";
-	
+	ObservableList<String>city_out2;
+	ObservableList<String>city_in2;
+	ObservableList<String>date2;
+	static String s11 = "";
+	static String s22 = "";
+	static String s33 = "";
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
+			
 			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/freemove", "root", "root");
 			Statement myStmt = myConn.createStatement();
 			ResultSet myRs = myStmt.executeQuery("select * from train");
@@ -51,14 +65,180 @@ public class Controller implements Initializable{
 			
 			while (myRs.next()) {
 				listView.getItems().addAll(myRs.getString("city_out")+" "+"-"+" "+ myRs.getString("city_in"));
-				city_out_search1.getItems().addAll(myRs.getString("city_out"));
-				city_in_search1.getItems().addAll(myRs.getString("city_in"));
-				date_search1.getItems().addAll(myRs.getString("date"));
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		city_out2= FXCollections.observableArrayList(
+				"Œ‰ÂÒ‡"," Ëø‚","À¸‚≥‚");
+		city_in2 = FXCollections.observableArrayList(
+				"Œ‰ÂÒ‡"," Ëø‚","À¸‚≥‚","’‡Í≥‚","¡Ó„‡ÚÓÂ");
+		date2 = FXCollections.observableArrayList(
+				"25.03.2016","26.03.2016","27.03.2016","28.03.2016","29.03.2016");
+		city_out_search1.setItems(city_out2);
+		city_in_search1.setItems(city_in2);
+		date_search1.setItems(date2);
+	}
+	
+	public void search() throws SQLException{
+		
+		search.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent arg0) {
+
+				try {
+					s11 = city_out_search1.getEditor().getText();
+					s22 = city_in_search1.getEditor().getText();
+					s33 = date_search1.getEditor().getText();
+					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/freemove", "root", "root");
+					ResultSet myRs = null;
+					String s1 = city_out_search1.getValue();
+					String s2 = city_in_search1.getValue();
+					String s3 = date_search1.getValue();
+					java.sql.PreparedStatement myStmt;
+					
+					if(city_out2.contains(s1) || city_out2.contains(s11)){
+						myStmt = myConn.prepareStatement("select * from train where city_out =?");
+						s1 = s11;
+						myStmt.setString(1, s1);
+						
+						myRs = myStmt.executeQuery();
+						listView.getItems().clear();
+						while (myRs.next()) {
+							listView.getItems()
+									.addAll(myRs.getString("city_out") + " " + "-" + " " + myRs.getString("city_in"));
+						}
+					}
+					
+					if(city_in2.contains(s2) || city_in2.contains(s22)){
+						myStmt = myConn.prepareStatement("select * from train where city_in=?");
+						s2 = s22;
+						myStmt.setString(1, s2);
+						
+						myRs = myStmt.executeQuery();
+						listView.getItems().clear();
+						while (myRs.next()) {
+							listView.getItems()
+									.addAll(myRs.getString("city_out") + " " + "-" + " " + myRs.getString("city_in"));
+						}
+					}
+					
+					if(date2.contains(s3) || date2.contains(s33)){
+						myStmt = myConn.prepareStatement("select * from train where date=?");
+						s3 = s33;
+						myStmt.setString(1, s3);
+						
+						myRs = myStmt.executeQuery();
+						listView.getItems().clear();
+						while (myRs.next()) {
+							listView.getItems()
+									.addAll(myRs.getString("city_out") + " " + "-" + " " + myRs.getString("city_in"));
+						}
+					}
+					
+					if((date2.contains(s3) || date2.contains(s33)) && (city_out2.contains(s1) || city_out2.contains(s11))){
+						myStmt = myConn.prepareStatement("select * from train where date=? and city_out=?");
+						s3 = s33;
+						s1 = s11;
+						myStmt.setString(1, s3);
+						myStmt.setString(2, s1);
+						
+						myRs = myStmt.executeQuery();
+						listView.getItems().clear();
+						while (myRs.next()) {
+							listView.getItems()
+									.addAll(myRs.getString("city_out") + " " + "-" + " " + myRs.getString("city_in"));
+						}
+					}
+					
+					if((date2.contains(s3) || date2.contains(s33))&& (city_in2.contains(s2) || city_in2.contains(s22))){
+						myStmt = myConn.prepareStatement("select * from train where date=? and city_in=?");
+						s3 = s33;
+						s2 = s22;
+						myStmt.setString(1, s3);
+						myStmt.setString(2, s2);
+						
+						myRs = myStmt.executeQuery();
+						listView.getItems().clear();
+						while (myRs.next()) {
+							listView.getItems()
+									.addAll(myRs.getString("city_out") + " " + "-" + " " + myRs.getString("city_in"));
+						}
+					}
+					
+					if((city_in2.contains(s2) || city_in2.contains(s22)) && (city_out2.contains(s1) || city_out2.contains(s11))){
+						myStmt = myConn.prepareStatement("select * from train where city_in=? and city_out=?");
+						s2 = s22;
+						s1 = s11;
+						myStmt.setString(1, s2);
+						myStmt.setString(2, s1);
+						
+						myRs = myStmt.executeQuery();
+						listView.getItems().clear();
+						while (myRs.next()) {
+							listView.getItems()
+									.addAll(myRs.getString("city_out") + " " + "-" + " " + myRs.getString("city_in"));
+						}
+					}
+					
+					if((date2.contains(s3) || date2.contains(s33)) && (city_out2.contains(s1) || city_out2.contains(s11)) && (city_in2.contains(s2) || city_in2.contains(s22))){
+						myStmt = myConn.prepareStatement("select * from train where date=? and city_out=? and city_in=?");
+						s1 = s11;
+						s2 = s22;
+						s3 = s33;
+						myStmt.setString(1, s3);
+						myStmt.setString(2, s1);
+						myStmt.setString(3, s2);
+						
+						myRs = myStmt.executeQuery();
+						listView.getItems().clear();
+						while (myRs.next()) {
+							listView.getItems()
+									.addAll(myRs.getString("city_out") + " " + "-" + " " + myRs.getString("city_in"));
+						}
+					}
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}	
+		});
+	}
+	
+	public void reset(){
+		
+		reset.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				
+				city_out_search1.setValue(null);
+				city_in_search1.setValue(null);
+				date_search1.setValue(null);
+				listView.getItems().clear();
+				city_out_search1.getEditor().setText(null);
+				city_in_search1.getEditor().setText(null);
+				date_search1.getEditor().setText(null);
+				
+				try {
+					
+					Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/freemove", "root", "root");
+					Statement myStmt = myConn.createStatement();
+					ResultSet myRs = myStmt.executeQuery("select * from train");
+					listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+					
+					while (myRs.next()) {
+						listView.getItems().addAll(myRs.getString("city_out")+" "+"-"+" "+ myRs.getString("city_in"));
+					}
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}	
+			}
+		});
 	}
 
 	public void work() throws SQLException {
@@ -69,6 +249,7 @@ public class Controller implements Initializable{
 		movies = listView.getSelectionModel().getSelectedItems();
 
 		for (String m : movies) {
+			
 			city_out1 = m.substring(0 , m.indexOf("-")-1);
 			city_in1 = m.substring(m.indexOf("-")+2);
 
@@ -79,6 +260,7 @@ public class Controller implements Initializable{
 			myStmt.setString(2, city_in1);
 			myRs = myStmt.executeQuery();
 			while (myRs.next()) {
+				
 				date.setText(myRs.getString("date"));
 				city_out.setText(myRs.getString("city_out"));
 				city_in.setText(myRs.getString("city_in"));
@@ -89,7 +271,6 @@ public class Controller implements Initializable{
 				city_in1 = "";
 				city_out1 = "";
 			}
-		}
-		
+		}		
 	}
 }

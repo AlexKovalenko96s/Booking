@@ -16,9 +16,9 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="129.0" prefWidth="598.0">
                <children>
-                  <ComboBox fx:id="city_out_search1" layoutX="53.0" layoutY="12.0" prefWidth="150.0" />
-                  <ComboBox fx:id="city_in_search1" layoutX="53.0" layoutY="49.0" prefWidth="150.0" />
-                  <Button layoutX="449.0" layoutY="25.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="128.0" text="Пошук">
+                  <ComboBox fx:id="city_out_search1" editable="true" layoutX="53.0" layoutY="12.0" prefWidth="150.0" promptText="Місто" />
+                  <ComboBox fx:id="city_in_search1" editable="true" layoutX="53.0" layoutY="49.0" prefWidth="150.0" promptText="Місто" />
+                  <Button fx:id="search" layoutX="448.0" layoutY="12.0" mnemonicParsing="false" onAction="#search" prefHeight="38.0" prefWidth="128.0" text="Пошук">
                      <font>
                         <Font name="Times New Roman" size="12.0" />
                      </font>
@@ -33,7 +33,7 @@
                         <Font name="Times New Roman" size="12.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="date_search1" layoutX="272.0" layoutY="31.0" prefWidth="150.0" />
+                  <ComboBox fx:id="date_search1" editable="true" layoutX="272.0" layoutY="31.0" prefWidth="150.0" promptText="Дата" />
                   <Label layoutX="233.0" layoutY="35.0" text="Коли:">
                      <font>
                         <Font name="Times New Roman" size="12.0" />
@@ -41,6 +41,11 @@
                   </Label>
                   <Separator layoutX="219.0" layoutY="1.0" orientation="VERTICAL" prefHeight="96.0" prefWidth="1.0" />
                   <Separator layoutX="434.0" layoutY="-4.0" orientation="VERTICAL" prefHeight="96.0" prefWidth="1.0" />
+                  <Button fx:id="reset" layoutX="448.0" layoutY="57.0" mnemonicParsing="false" onAction="#reset" prefHeight="14.0" prefWidth="128.0" text="Reset">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="285.0" prefWidth="598.0">
