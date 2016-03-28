@@ -16,7 +16,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <ComboBox fx:id="vag_vubor" editable="true" focusTraversable="false" layoutX="37.0" layoutY="26.0" onAction="#vagonu" prefWidth="150.0" promptText="Вагон" />
+                  <ComboBox fx:id="vag_vubor" editable="true" layoutX="37.0" layoutY="26.0" onAction="#vagonu" prefWidth="150.0" promptText="Вагон" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="331.0" prefWidth="598.0">
@@ -57,7 +57,7 @@
                                        <children>
                                           <Button layoutX="43.0" layoutY="118.0" mnemonicParsing="false" onAction="#poschotat" text="Забронювати" />
                                           <Button layoutX="54.0" layoutY="74.0" mnemonicParsing="false" onAction="#reset" text="Відмінити" />
-                                          <Label fx:id="vag_number" layoutX="14.0" layoutY="14.0" text="Вагон 1" />
+                                          <Label fx:id="vag_number" layoutX="14.0" layoutY="14.0" text="Вагон 2" />
                                           <Button layoutX="55.0" layoutY="31.0" mnemonicParsing="false" onAction="#proverka" text="Полічити" />
                                        </children>
                                     </AnchorPane>
