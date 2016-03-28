@@ -61,6 +61,8 @@ public class Controller implements Initializable{
 	static String s11 = "";
 	static String s22 = "";
 	static String s33 = "";
+	ObservableList<String> movies;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
@@ -256,9 +258,8 @@ public class Controller implements Initializable{
 
 		Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/freemove", "root", "root");
 		ResultSet myRs = null;
-		ObservableList<String> movies;
 		movies = listView.getSelectionModel().getSelectedItems();
-
+	
 		for (String m : movies) {
 			
 			city_out1 = m.substring(0 , m.indexOf("-")-1);
@@ -285,7 +286,7 @@ public class Controller implements Initializable{
 		}		
 	}
 	
-	public void booking(ActionEvent event) throws IOException{
+	public void booking(ActionEvent event) throws IOException {
 		Scene booking = new Scene(FXMLLoader.load(getClass().getResource("booking.fxml")));
 		booking.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

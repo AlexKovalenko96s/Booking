@@ -145,62 +145,75 @@ public class Booking implements Initializable{
 			myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");	
 			myStmt.setString(1, "1");
 			myStmt.executeUpdate();
+			c1.setDisable(true);
 		}
 		if(c2.isSelected()==true){
 			myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");	
 			myStmt.setString(1, "2");
 			myStmt.executeUpdate();
+			c2.setDisable(true);
 		}
 		if(c3.isSelected()==true){
 			myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");	
 			myStmt.setString(1, "3");
 			myStmt.executeUpdate();
+			c3.setDisable(true);
 		}
 		if(c4.isSelected()==true){
 			myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");	
 			myStmt.setString(1, "4");
 			myStmt.executeUpdate();
+			c4.setDisable(true);
 		}
 		if(c5.isSelected()==true){
 			myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");	
 			myStmt.setString(1, "5");
 			myStmt.executeUpdate();
+			c5.setDisable(true);
 		}
 		if(c6.isSelected()==true){
 			myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");	
 			myStmt.setString(1, "6");
 			myStmt.executeUpdate();
+			c6.setDisable(true);
 		}
 		if(c7.isSelected()==true){
 			myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");	
 			myStmt.setString(1, "7");
 			myStmt.executeUpdate();
+			c7.setDisable(true);
 		}
 		if(c8.isSelected()==true){
 			myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");	
 			myStmt.setString(1, "8");
 			myStmt.executeUpdate();
+			c8.setDisable(true);
 		}
 		if(c9.isSelected()==true){
 			myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");	
 			myStmt.setString(1, "9");
 			myStmt.executeUpdate();
+			c9.setDisable(true);
 		}
 		if(c10.isSelected()==true){
 			myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");	
 			myStmt.setString(1, "10");
 			myStmt.executeUpdate();
+			c10.setDisable(true);
 		}
 		if(c11.isSelected()==true){
 			myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");	
 			myStmt.setString(1, "11");
 			myStmt.executeUpdate();
+			c11.setDisable(true);
 		}
 		if(c12.isSelected()==true){
 			myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");	
 			myStmt.setString(1, "12");
 			myStmt.executeUpdate();
+			c12.setDisable(true);
 		}
+		reset(null);
 	}
 	
 	public void proverka(){
