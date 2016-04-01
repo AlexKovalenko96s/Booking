@@ -30,7 +30,9 @@ public class Booking implements Initializable{
 	@FXML Pane p2;
 	@FXML Pane p3;
 	@FXML ComboBox<String> vag_vubor;
-	ObservableList<String>vagonu;
+	@FXML ObservableList<String>vagonu;
+	@FXML ObservableList<String>city_out;
+	@FXML ObservableList<String>city_in;
 	@FXML CheckBox c1;
 	@FXML CheckBox c2;
 	@FXML CheckBox c3;
@@ -48,20 +50,29 @@ public class Booking implements Initializable{
 	@FXML Label how_much;
 	String vagon_number;
 	static String v;
-	
+	static String N;
+ 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		
 		vagonu = FXCollections.observableArrayList(
 				"Вагон 1","Вагон 2","Вагон 3");
+		city_out= FXCollections.observableArrayList(
+				"Одеса","Київ","Львів");
+		city_in = FXCollections.observableArrayList(
+				"Одеса","Київ","Львів","Харків","Богатое");
 		vag_vubor.setItems(vagonu);
+		
 		Connection myConn;
+		
 		
 		try {
 			myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/freemove", "root", "root");
-			Statement myStmt = myConn.createStatement();
-			if("Вагон 1".equals(v)){
-				ResultSet myRs = myStmt.executeQuery("select * from odesa_kyiv where vagon = 1");
-				
+			if(vagonu.contains(v)){	
+				java.sql.PreparedStatement myStmt;
+				myStmt = myConn.prepareStatement("select * from odesa_kyiv where vagon = ?");
+				myStmt.setString(1, N);
+				ResultSet myRs = myStmt.executeQuery();
 				while (myRs.next()) {
 					if(myRs.getString("mesto").equals("1")){
 						c1.setDisable(true);
@@ -99,107 +110,17 @@ public class Booking implements Initializable{
 					if(myRs.getString("mesto").equals("12")){
 						c12.setDisable(true);
 					}
-					
-				}
-			}
-			
-			if("Вагон 2".equals(v)){
-				ResultSet myRs = myStmt.executeQuery("select * from odesa_kyiv where vagon = 2");
-				
-				while (myRs.next()) {
-					if(myRs.getString("mesto").equals("1")){
-						c1.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("2")){
-						c2.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("3")){
-						c3.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("4")){
-						c4.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("5")){
-						c5.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("6")){
-						c6.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("7")){
-						c7.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("8")){
-						c8.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("9")){
-						c9.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("10")){
-						c10.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("11")){
-						c11.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("12")){
-						c12.setDisable(true);
-					}
-					
-				}
-			}
-			
-			if("Вагон 3".equals(v)){
-				ResultSet myRs = myStmt.executeQuery("select * from odesa_kyiv where vagon = 3");
-				
-				while (myRs.next()) {
-					if(myRs.getString("mesto").equals("1")){
-						c1.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("2")){
-						c2.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("3")){
-						c3.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("4")){
-						c4.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("5")){
-						c5.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("6")){
-						c6.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("7")){
-						c7.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("8")){
-						c8.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("9")){
-						c9.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("10")){
-						c10.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("11")){
-						c11.setDisable(true);
-					}
-					if(myRs.getString("mesto").equals("12")){
-						c12.setDisable(true);
-					}
-					
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void vagonu (ActionEvent e) throws IOException{
 		v = vag_vubor.getEditor().getText();
+		N = v.substring(v.indexOf("н")+2);
 		vag_number.setText(v);
-		System.out.println(v);
 		if("Вагон 1".equals(v)){
 			Scene booking = new Scene(FXMLLoader.load(getClass().getResource("booking.fxml")));
 			booking.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -242,225 +163,88 @@ public class Booking implements Initializable{
 	public void poschotat (ActionEvent e) throws SQLException{
 		java.sql.PreparedStatement myStmt;
 		Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/freemove", "root", "root");
-		if ("Вагон 1".equals(v)) {
+		if (vagonu.contains(v)) {
 			if (c1.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");
-				myStmt.setString(1, "1");
+				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
+				myStmt.setString(1, N);
+				myStmt.setString(2, "1");
 				myStmt.executeUpdate();
 				c1.setDisable(true);
 			}
 			if (c2.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");
-				myStmt.setString(1, "2");
+				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
+				myStmt.setString(1, N);
+				myStmt.setString(2, "2");
 				myStmt.executeUpdate();
 				c2.setDisable(true);
 			}
 			if (c3.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");
-				myStmt.setString(1, "3");
+				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
+				myStmt.setString(1, N);
+				myStmt.setString(2, "3");
 				myStmt.executeUpdate();
 				c3.setDisable(true);
 			}
 			if (c4.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");
-				myStmt.setString(1, "4");
+				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
+				myStmt.setString(1, N);
+				myStmt.setString(2, "4");
 				myStmt.executeUpdate();
 				c4.setDisable(true);
 			}
 			if (c5.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");
-				myStmt.setString(1, "5");
+				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
+				myStmt.setString(1, N);
+				myStmt.setString(2, "5");
 				myStmt.executeUpdate();
 				c5.setDisable(true);
 			}
 			if (c6.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");
-				myStmt.setString(1, "6");
+				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
+				myStmt.setString(1, N);
+				myStmt.setString(2, "6");
 				myStmt.executeUpdate();
 				c6.setDisable(true);
 			}
 			if (c7.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");
-				myStmt.setString(1, "7");
+				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
+				myStmt.setString(1, N);
+				myStmt.setString(2, "7");
 				myStmt.executeUpdate();
 				c7.setDisable(true);
 			}
 			if (c8.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");
-				myStmt.setString(1, "8");
+				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
+				myStmt.setString(1, N);
+				myStmt.setString(2, "8");
 				myStmt.executeUpdate();
 				c8.setDisable(true);
 			}
 			if (c9.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");
-				myStmt.setString(1, "9");
+				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
+				myStmt.setString(1, N);
+				myStmt.setString(2, "9");
 				myStmt.executeUpdate();
 				c9.setDisable(true);
 			}
 			if (c10.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");
-				myStmt.setString(1, "10");
+				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
+				myStmt.setString(1, N);
+				myStmt.setString(2, "10");
 				myStmt.executeUpdate();
 				c10.setDisable(true);
 			}
 			if (c11.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");
-				myStmt.setString(1, "11");
+				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
+				myStmt.setString(1, N);
+				myStmt.setString(2, "11");
 				myStmt.executeUpdate();
 				c11.setDisable(true);
 			}
 			if (c12.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (1,?)");
-				myStmt.setString(1, "12");
-				myStmt.executeUpdate();
-				c12.setDisable(true);
-			}
-		}
-		
-		if ("Вагон 2".equals(v)) {
-			if (c1.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (2,?)");
-				myStmt.setString(1, "1");
-				myStmt.executeUpdate();
-				c1.setDisable(true);
-			}
-			if (c2.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (2,?)");
-				myStmt.setString(1, "2");
-				myStmt.executeUpdate();
-				c2.setDisable(true);
-			}
-			if (c3.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (2,?)");
-				myStmt.setString(1, "3");
-				myStmt.executeUpdate();
-				c3.setDisable(true);
-			}
-			if (c4.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (2,?)");
-				myStmt.setString(1, "4");
-				myStmt.executeUpdate();
-				c4.setDisable(true);
-			}
-			if (c5.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (2,?)");
-				myStmt.setString(1, "5");
-				myStmt.executeUpdate();
-				c5.setDisable(true);
-			}
-			if (c6.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (2,?)");
-				myStmt.setString(1, "6");
-				myStmt.executeUpdate();
-				c6.setDisable(true);
-			}
-			if (c7.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (2,?)");
-				myStmt.setString(1, "7");
-				myStmt.executeUpdate();
-				c7.setDisable(true);
-			}
-			if (c8.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (2,?)");
-				myStmt.setString(1, "8");
-				myStmt.executeUpdate();
-				c8.setDisable(true);
-			}
-			if (c9.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (2,?)");
-				myStmt.setString(1, "9");
-				myStmt.executeUpdate();
-				c9.setDisable(true);
-			}
-			if (c10.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (2,?)");
-				myStmt.setString(1, "10");
-				myStmt.executeUpdate();
-				c10.setDisable(true);
-			}
-			if (c11.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (2,?)");
-				myStmt.setString(1, "11");
-				myStmt.executeUpdate();
-				c11.setDisable(true);
-			}
-			if (c12.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (2,?)");
-				myStmt.setString(1, "12");
-				myStmt.executeUpdate();
-				c12.setDisable(true);
-			}
-		}
-		if ("Вагон 3".equals(v)) {
-			if (c1.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (3,?)");
-				myStmt.setString(1, "1");
-				myStmt.executeUpdate();
-				c1.setDisable(true);
-			}
-			if (c2.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (3,?)");
-				myStmt.setString(1, "2");
-				myStmt.executeUpdate();
-				c2.setDisable(true);
-			}
-			if (c3.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (3,?)");
-				myStmt.setString(1, "3");
-				myStmt.executeUpdate();
-				c3.setDisable(true);
-			}
-			if (c4.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (3,?)");
-				myStmt.setString(1, "4");
-				myStmt.executeUpdate();
-				c4.setDisable(true);
-			}
-			if (c5.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (3,?)");
-				myStmt.setString(1, "5");
-				myStmt.executeUpdate();
-				c5.setDisable(true);
-			}
-			if (c6.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (3,?)");
-				myStmt.setString(1, "6");
-				myStmt.executeUpdate();
-				c6.setDisable(true);
-			}
-			if (c7.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (3,?)");
-				myStmt.setString(1, "7");
-				myStmt.executeUpdate();
-				c7.setDisable(true);
-			}
-			if (c8.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (3,?)");
-				myStmt.setString(1, "8");
-				myStmt.executeUpdate();
-				c8.setDisable(true);
-			}
-			if (c9.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (3,?)");
-				myStmt.setString(1, "9");
-				myStmt.executeUpdate();
-				c9.setDisable(true);
-			}
-			if (c10.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (3,?)");
-				myStmt.setString(1, "10");
-				myStmt.executeUpdate();
-				c10.setDisable(true);
-			}
-			if (c11.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (3,?)");
-				myStmt.setString(1, "11");
-				myStmt.executeUpdate();
-				c11.setDisable(true);
-			}
-			if (c12.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (3,?)");
-				myStmt.setString(1, "12");
+				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
+				myStmt.setString(1, N);
+				myStmt.setString(2, "12");
 				myStmt.executeUpdate();
 				c12.setDisable(true);
 			}
