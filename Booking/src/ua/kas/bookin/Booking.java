@@ -51,7 +51,7 @@ public class Booking implements Initializable{
 	String vagon_number;
 	static String v;
 	static String N;
- 	
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -68,11 +68,16 @@ public class Booking implements Initializable{
 		
 		try {
 			myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/freemove", "root", "root");
+			
 			if(vagonu.contains(v)){	
 				java.sql.PreparedStatement myStmt;
-				myStmt = myConn.prepareStatement("select * from odesa_kyiv where vagon = ?");
+				myStmt = myConn.prepareStatement("select * from train where vagon = ? and city_out=? and city_in=? and date=?");
 				myStmt.setString(1, N);
+				myStmt.setString(2, Controller.CO);
+				myStmt.setString(3, Controller.CI);
+				myStmt.setString(4, Controller.D);
 				ResultSet myRs = myStmt.executeQuery();
+				
 				while (myRs.next()) {
 					if(myRs.getString("mesto").equals("1")){
 						c1.setDisable(true);
@@ -110,11 +115,9 @@ public class Booking implements Initializable{
 					if(myRs.getString("mesto").equals("12")){
 						c12.setDisable(true);
 					}
-				}
+				}		
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {e.printStackTrace();}
 	}
 	
 	public void vagonu (ActionEvent e) throws IOException{
@@ -141,6 +144,7 @@ public class Booking implements Initializable{
 			Stage app_stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
 			app_stage.setScene(booking);
 			app_stage.show();
+			
 		}
 	}
 	
@@ -165,86 +169,146 @@ public class Booking implements Initializable{
 		Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/freemove", "root", "root");
 		if (vagonu.contains(v)) {
 			if (c1.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
-				myStmt.setString(1, N);
-				myStmt.setString(2, "1");
+				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto) values (?,?,?,?,?,?,?)");
+				myStmt.setString(1, Controller.D);
+				myStmt.setString(2, Controller.CO);
+				myStmt.setString(3, Controller.CI);
+				myStmt.setString(4, Controller.TO);
+				myStmt.setString(5, Controller.TI);
+				myStmt.setString(6, N);
+				myStmt.setString(7, "1");
 				myStmt.executeUpdate();
 				c1.setDisable(true);
 			}
 			if (c2.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
-				myStmt.setString(1, N);
-				myStmt.setString(2, "2");
+				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto) values (?,?,?,?,?,?,?)");
+				myStmt.setString(1, Controller.D);
+				myStmt.setString(2, Controller.CO);
+				myStmt.setString(3, Controller.CI);
+				myStmt.setString(4, Controller.TO);
+				myStmt.setString(5, Controller.TI);
+				myStmt.setString(6, N);
+				myStmt.setString(7, "2");
 				myStmt.executeUpdate();
 				c2.setDisable(true);
 			}
 			if (c3.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
-				myStmt.setString(1, N);
-				myStmt.setString(2, "3");
+				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto) values (?,?,?,?,?,?,?)");
+				myStmt.setString(1, Controller.D);
+				myStmt.setString(2, Controller.CO);
+				myStmt.setString(3, Controller.CI);
+				myStmt.setString(4, Controller.TO);
+				myStmt.setString(5, Controller.TI);
+				myStmt.setString(6, N);
+				myStmt.setString(7, "3");
 				myStmt.executeUpdate();
 				c3.setDisable(true);
 			}
 			if (c4.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
-				myStmt.setString(1, N);
-				myStmt.setString(2, "4");
+				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto) values (?,?,?,?,?,?,?)");
+				myStmt.setString(1, Controller.D);
+				myStmt.setString(2, Controller.CO);
+				myStmt.setString(3, Controller.CI);
+				myStmt.setString(4, Controller.TO);
+				myStmt.setString(5, Controller.TI);
+				myStmt.setString(6, N);
+				myStmt.setString(7, "4");
 				myStmt.executeUpdate();
 				c4.setDisable(true);
 			}
 			if (c5.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
-				myStmt.setString(1, N);
-				myStmt.setString(2, "5");
+				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto) values (?,?,?,?,?,?,?)");
+				myStmt.setString(1, Controller.D);
+				myStmt.setString(2, Controller.CO);
+				myStmt.setString(3, Controller.CI);
+				myStmt.setString(4, Controller.TO);
+				myStmt.setString(5, Controller.TI);
+				myStmt.setString(6, N);
+				myStmt.setString(7, "5");
 				myStmt.executeUpdate();
 				c5.setDisable(true);
 			}
 			if (c6.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
-				myStmt.setString(1, N);
-				myStmt.setString(2, "6");
+				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto) values (?,?,?,?,?,?,?)");
+				myStmt.setString(1, Controller.D);
+				myStmt.setString(2, Controller.CO);
+				myStmt.setString(3, Controller.CI);
+				myStmt.setString(4, Controller.TO);
+				myStmt.setString(5, Controller.TI);
+				myStmt.setString(6, N);
+				myStmt.setString(7, "6");
 				myStmt.executeUpdate();
 				c6.setDisable(true);
 			}
 			if (c7.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
-				myStmt.setString(1, N);
-				myStmt.setString(2, "7");
+				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto) values (?,?,?,?,?,?,?)");
+				myStmt.setString(1, Controller.D);
+				myStmt.setString(2, Controller.CO);
+				myStmt.setString(3, Controller.CI);
+				myStmt.setString(4, Controller.TO);
+				myStmt.setString(5, Controller.TI);
+				myStmt.setString(6, N);
+				myStmt.setString(7, "7");
 				myStmt.executeUpdate();
 				c7.setDisable(true);
 			}
 			if (c8.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
-				myStmt.setString(1, N);
-				myStmt.setString(2, "8");
+				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto) values (?,?,?,?,?,?,?)");
+				myStmt.setString(1, Controller.D);
+				myStmt.setString(2, Controller.CO);
+				myStmt.setString(3, Controller.CI);
+				myStmt.setString(4, Controller.TO);
+				myStmt.setString(5, Controller.TI);
+				myStmt.setString(6, N);
+				myStmt.setString(7, "8");
 				myStmt.executeUpdate();
 				c8.setDisable(true);
 			}
 			if (c9.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
-				myStmt.setString(1, N);
-				myStmt.setString(2, "9");
+				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto) values (?,?,?,?,?,?,?)");
+				myStmt.setString(1, Controller.D);
+				myStmt.setString(2, Controller.CO);
+				myStmt.setString(3, Controller.CI);
+				myStmt.setString(4, Controller.TO);
+				myStmt.setString(5, Controller.TI);
+				myStmt.setString(6, N);
+				myStmt.setString(7, "9");
 				myStmt.executeUpdate();
 				c9.setDisable(true);
 			}
 			if (c10.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
-				myStmt.setString(1, N);
-				myStmt.setString(2, "10");
+				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto) values (?,?,?,?,?,?,?)");
+				myStmt.setString(1, Controller.D);
+				myStmt.setString(2, Controller.CO);
+				myStmt.setString(3, Controller.CI);
+				myStmt.setString(4, Controller.TO);
+				myStmt.setString(5, Controller.TI);
+				myStmt.setString(6, N);
+				myStmt.setString(7, "10");
 				myStmt.executeUpdate();
 				c10.setDisable(true);
 			}
 			if (c11.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
-				myStmt.setString(1, N);
-				myStmt.setString(2, "11");
+				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto) values (?,?,?,?,?,?,?)");
+				myStmt.setString(1, Controller.D);
+				myStmt.setString(2, Controller.CO);
+				myStmt.setString(3, Controller.CI);
+				myStmt.setString(4, Controller.TO);
+				myStmt.setString(5, Controller.TI);
+				myStmt.setString(6, N);
+				myStmt.setString(7, "11");
 				myStmt.executeUpdate();
 				c11.setDisable(true);
 			}
 			if (c12.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into odesa_kyiv (vagon, mesto) values (?,?)");
-				myStmt.setString(1, N);
-				myStmt.setString(2, "12");
+				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto) values (?,?,?,?,?,?,?)");
+				myStmt.setString(1, Controller.D);
+				myStmt.setString(2, Controller.CO);
+				myStmt.setString(3, Controller.CI);
+				myStmt.setString(4, Controller.TO);
+				myStmt.setString(5, Controller.TI);
+				myStmt.setString(6, N);
+				myStmt.setString(7, "12");
 				myStmt.executeUpdate();
 				c12.setDisable(true);
 			}

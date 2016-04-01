@@ -62,6 +62,11 @@ public class Controller implements Initializable{
 	static String s22 = "";
 	static String s33 = "";
 	ObservableList<String> movies;
+	public static String CO;
+	public static String CI;
+	public static String D;
+	public static String TO;
+	public static String TI;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -279,6 +284,12 @@ public class Controller implements Initializable{
 				time_out.setText(myRs.getString("time_out"));
 				time_in.setText(myRs.getString("time_in"));
 				seats.setText(myRs.getString("seats"));
+				
+				CO = myRs.getString("city_out");
+				CI = myRs.getString("city_in");
+				D = myRs.getString("date");
+				TO = myRs.getString("time_out");
+				TI = myRs.getString("time_in");
 				
 				city_in1 = "";
 				city_out1 = "";
