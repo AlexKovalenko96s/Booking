@@ -74,7 +74,7 @@ public class Controller implements Initializable{
 			
 			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/freemove", "root", "root");
 			Statement myStmt = myConn.createStatement();
-			ResultSet myRs = myStmt.executeQuery("select * from train");
+			ResultSet myRs = myStmt.executeQuery("select * from train where train=1");
 			listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 			
 			while (myRs.next()) {
@@ -119,9 +119,11 @@ public class Controller implements Initializable{
 					
 					
 					if(city_out2.contains(s1) || city_out2.contains(s11)){
-						myStmt = myConn.prepareStatement("select * from train where city_out =?");
+						myStmt = myConn.prepareStatement("select * from train where city_out =? and train=?");
 						s1 = s11;
+						String t = "1";
 						myStmt.setString(1, s1);
+						myStmt.setString(2, t);
 						
 						myRs = myStmt.executeQuery();
 						listView.getItems().clear();
@@ -132,9 +134,11 @@ public class Controller implements Initializable{
 					}
 					
 					if(city_in2.contains(s2) || city_in2.contains(s22)){
-						myStmt = myConn.prepareStatement("select * from train where city_in=?");
+						myStmt = myConn.prepareStatement("select * from train where city_in=? and train=?");
 						s2 = s22;
+						String t = "1";
 						myStmt.setString(1, s2);
+						myStmt.setString(2, t);
 						
 						myRs = myStmt.executeQuery();
 						listView.getItems().clear();
@@ -145,9 +149,11 @@ public class Controller implements Initializable{
 					}
 					
 					if(date2.contains(s3) || date2.contains(s33)){
-						myStmt = myConn.prepareStatement("select * from train where date=?");
+						myStmt = myConn.prepareStatement("select * from train where date=? and train=?");
 						s3 = s33;
-						myStmt.setString(1, s3);						
+						String t = "1";
+						myStmt.setString(1, s3);
+						myStmt.setString(2, t);
 						
 						myRs = myStmt.executeQuery();
 						listView.getItems().clear();
@@ -158,11 +164,13 @@ public class Controller implements Initializable{
 					}
 					
 					if((date2.contains(s3) || date2.contains(s33)) && (city_out2.contains(s1) || city_out2.contains(s11))){
-						myStmt = myConn.prepareStatement("select * from train where date=? and city_out=?");
+						myStmt = myConn.prepareStatement("select * from train where date=? and city_out=? and train=?");
 						s1 = s11;
 						s3 = s33;
+						String t = "1";
 						myStmt.setString(1, s3);
 						myStmt.setString(2, s1);
+						myStmt.setString(3, t);
 						
 						myRs = myStmt.executeQuery();
 						listView.getItems().clear();
@@ -173,11 +181,13 @@ public class Controller implements Initializable{
 					}
 					
 					if((date2.contains(s3) || date2.contains(s33))&& (city_in2.contains(s2) || city_in2.contains(s22))){
-						myStmt = myConn.prepareStatement("select * from train where date=? and city_in=?");
+						myStmt = myConn.prepareStatement("select * from train where date=? and city_in=? and train=?");
 						s2 = s22;
 						s3 = s33;
+						String t = "1";
 						myStmt.setString(1, s3);
 						myStmt.setString(2, s2);
+						myStmt.setString(3, t);
 						
 						myRs = myStmt.executeQuery();
 						listView.getItems().clear();
@@ -188,11 +198,13 @@ public class Controller implements Initializable{
 					}
 					
 					if((city_in2.contains(s2) || city_in2.contains(s22)) && (city_out2.contains(s1) || city_out2.contains(s11))){
-						myStmt = myConn.prepareStatement("select * from train where city_in=? and city_out=?");
+						myStmt = myConn.prepareStatement("select * from train where city_in=? and city_out=? and train=?");
 						s2 = s22;
 						s1 = s11;
+						String t = "1";
 						myStmt.setString(1, s2);
 						myStmt.setString(2, s1);
+						myStmt.setString(3, t);
 						
 						myRs = myStmt.executeQuery();
 						listView.getItems().clear();
@@ -203,13 +215,15 @@ public class Controller implements Initializable{
 					}
 					
 					if((date2.contains(s3) || (date2.contains(s33)) && (city_out2.contains(s1) || city_out2.contains(s11)) && (city_in2.contains(s2) || city_in2.contains(s22)))){
-						myStmt = myConn.prepareStatement("select * from train where date=? and city_out=? and city_in=?");
+						myStmt = myConn.prepareStatement("select * from train where date=? and city_out=? and city_in=? and train=?");
 						s1 = s11;
 						s2 = s22;
 						s3 = s33;
+						String t = "1";
 						myStmt.setString(1, s3);
 						myStmt.setString(2, s1);
 						myStmt.setString(3, s2);
+						myStmt.setString(4, t);
 						
 						myRs = myStmt.executeQuery();
 						listView.getItems().clear();
