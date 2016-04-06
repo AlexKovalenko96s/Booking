@@ -67,6 +67,7 @@ public class Controller implements Initializable{
 	public static String D;
 	public static String TO;
 	public static String TI;
+	public static String NUMBER;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -74,7 +75,7 @@ public class Controller implements Initializable{
 			
 			Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/freemove", "root", "root");
 			Statement myStmt = myConn.createStatement();
-			ResultSet myRs = myStmt.executeQuery("select * from train where train=1");
+			ResultSet myRs = myStmt.executeQuery("select * from train");
 			listView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 			
 			while (myRs.next()) {
@@ -304,6 +305,7 @@ public class Controller implements Initializable{
 				D = myRs.getString("date");
 				TO = myRs.getString("time_out");
 				TI = myRs.getString("time_in");
+				NUMBER = myRs.getString("¹");
 				
 				city_in1 = "";
 				city_out1 = "";

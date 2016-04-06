@@ -71,7 +71,7 @@ public class Booking implements Initializable{
 			
 			if(vagonu.contains(v)){	
 				java.sql.PreparedStatement myStmt;
-				myStmt = myConn.prepareStatement("select * from train where vagon = ? and city_out=? and city_in=? and date=?");
+				myStmt = myConn.prepareStatement("select * from seats where vagon = ? and city_out=? and city_in=? and date=?");
 				myStmt.setString(1, N);
 				myStmt.setString(2, Controller.CO);
 				myStmt.setString(3, Controller.CI);
@@ -169,7 +169,7 @@ public class Booking implements Initializable{
 		Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/freemove", "root", "root");
 		if (vagonu.contains(v)) {
 			if (c1.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto, train) values (?,?,?,?,?,?,?,?)");
+				myStmt = myConn.prepareStatement("insert into seats (date,city_out,city_in,time_out,time_in,vagon, mesto, ¹) values (?,?,?,?,?,?,?,?)");
 				myStmt.setString(1, Controller.D);
 				myStmt.setString(2, Controller.CO);
 				myStmt.setString(3, Controller.CI);
@@ -177,12 +177,12 @@ public class Booking implements Initializable{
 				myStmt.setString(5, Controller.TI);
 				myStmt.setString(6, N);
 				myStmt.setString(7, "1");
-				myStmt.setString(8, "2");
+				myStmt.setString(8, Controller.NUMBER);
 				myStmt.executeUpdate();
 				c1.setDisable(true);
 			}
 			if (c2.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto, train) values (?,?,?,?,?,?,?,?)");
+				myStmt = myConn.prepareStatement("insert into seats (date,city_out,city_in,time_out,time_in,vagon, mesto, ¹) values (?,?,?,?,?,?,?,?)");
 				myStmt.setString(1, Controller.D);
 				myStmt.setString(2, Controller.CO);
 				myStmt.setString(3, Controller.CI);
@@ -190,12 +190,12 @@ public class Booking implements Initializable{
 				myStmt.setString(5, Controller.TI);
 				myStmt.setString(6, N);
 				myStmt.setString(7, "2");
-				myStmt.setString(8, "2");
+				myStmt.setString(8, Controller.NUMBER);
 				myStmt.executeUpdate();
 				c2.setDisable(true);
 			}
 			if (c3.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto, train) values (?,?,?,?,?,?,?,?)");
+				myStmt = myConn.prepareStatement("insert into seats (date,city_out,city_in,time_out,time_in,vagon, mesto, ¹) values (?,?,?,?,?,?,?,?)");
 				myStmt.setString(1, Controller.D);
 				myStmt.setString(2, Controller.CO);
 				myStmt.setString(3, Controller.CI);
@@ -203,12 +203,12 @@ public class Booking implements Initializable{
 				myStmt.setString(5, Controller.TI);
 				myStmt.setString(6, N);
 				myStmt.setString(7, "3");
-				myStmt.setString(8, "2");
+				myStmt.setString(8, Controller.NUMBER);
 				myStmt.executeUpdate();
 				c3.setDisable(true);
 			}
 			if (c4.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto, train) values (?,?,?,?,?,?,?,?)");
+				myStmt = myConn.prepareStatement("insert into seats (date,city_out,city_in,time_out,time_in,vagon, mesto, ¹) values (?,?,?,?,?,?,?,?)");
 				myStmt.setString(1, Controller.D);
 				myStmt.setString(2, Controller.CO);
 				myStmt.setString(3, Controller.CI);
@@ -216,12 +216,12 @@ public class Booking implements Initializable{
 				myStmt.setString(5, Controller.TI);
 				myStmt.setString(6, N);
 				myStmt.setString(7, "4");
-				myStmt.setString(8, "2");
+				myStmt.setString(8, Controller.NUMBER);
 				myStmt.executeUpdate();
 				c4.setDisable(true);
 			}
 			if (c5.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto, train) values (?,?,?,?,?,?,?,?)");
+				myStmt = myConn.prepareStatement("insert into seats (date,city_out,city_in,time_out,time_in,vagon, mesto, ¹) values (?,?,?,?,?,?,?,?)");
 				myStmt.setString(1, Controller.D);
 				myStmt.setString(2, Controller.CO);
 				myStmt.setString(3, Controller.CI);
@@ -229,12 +229,12 @@ public class Booking implements Initializable{
 				myStmt.setString(5, Controller.TI);
 				myStmt.setString(6, N);
 				myStmt.setString(7, "5");
-				myStmt.setString(8, "2");
+				myStmt.setString(8, Controller.NUMBER);
 				myStmt.executeUpdate();
 				c5.setDisable(true);
 			}
 			if (c6.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto, train) values (?,?,?,?,?,?,?,?)");
+				myStmt = myConn.prepareStatement("insert into seats (date,city_out,city_in,time_out,time_in,vagon, mesto, ¹) values (?,?,?,?,?,?,?,?)");
 				myStmt.setString(1, Controller.D);
 				myStmt.setString(2, Controller.CO);
 				myStmt.setString(3, Controller.CI);
@@ -242,12 +242,12 @@ public class Booking implements Initializable{
 				myStmt.setString(5, Controller.TI);
 				myStmt.setString(6, N);
 				myStmt.setString(7, "6");
-				myStmt.setString(8, "2");
+				myStmt.setString(8, Controller.NUMBER);
 				myStmt.executeUpdate();
 				c6.setDisable(true);
 			}
 			if (c7.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto, train) values (?,?,?,?,?,?,?,?)");
+				myStmt = myConn.prepareStatement("insert into seats (date,city_out,city_in,time_out,time_in,vagon, mesto, ¹) values (?,?,?,?,?,?,?,?)");
 				myStmt.setString(1, Controller.D);
 				myStmt.setString(2, Controller.CO);
 				myStmt.setString(3, Controller.CI);
@@ -255,12 +255,12 @@ public class Booking implements Initializable{
 				myStmt.setString(5, Controller.TI);
 				myStmt.setString(6, N);
 				myStmt.setString(7, "7");
-				myStmt.setString(8, "2");
+				myStmt.setString(8, Controller.NUMBER);
 				myStmt.executeUpdate();
 				c7.setDisable(true);
 			}
 			if (c8.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto, train) values (?,?,?,?,?,?,?,?)");
+				myStmt = myConn.prepareStatement("insert into seats (date,city_out,city_in,time_out,time_in,vagon, mesto, ¹) values (?,?,?,?,?,?,?,?)");
 				myStmt.setString(1, Controller.D);
 				myStmt.setString(2, Controller.CO);
 				myStmt.setString(3, Controller.CI);
@@ -268,12 +268,12 @@ public class Booking implements Initializable{
 				myStmt.setString(5, Controller.TI);
 				myStmt.setString(6, N);
 				myStmt.setString(7, "8");
-				myStmt.setString(8, "2");
+				myStmt.setString(8, Controller.NUMBER);
 				myStmt.executeUpdate();
 				c8.setDisable(true);
 			}
 			if (c9.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto, train) values (?,?,?,?,?,?,?,?)");
+				myStmt = myConn.prepareStatement("insert into seats (date,city_out,city_in,time_out,time_in,vagon, mesto, ¹) values (?,?,?,?,?,?,?,?)");
 				myStmt.setString(1, Controller.D);
 				myStmt.setString(2, Controller.CO);
 				myStmt.setString(3, Controller.CI);
@@ -281,12 +281,12 @@ public class Booking implements Initializable{
 				myStmt.setString(5, Controller.TI);
 				myStmt.setString(6, N);
 				myStmt.setString(7, "9");
-				myStmt.setString(8, "2");
+				myStmt.setString(8, Controller.NUMBER);
 				myStmt.executeUpdate();
 				c9.setDisable(true);
 			}
 			if (c10.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto, train) values (?,?,?,?,?,?,?,?)");
+				myStmt = myConn.prepareStatement("insert into seats (date,city_out,city_in,time_out,time_in,vagon, mesto, ¹) values (?,?,?,?,?,?,?,?)");
 				myStmt.setString(1, Controller.D);
 				myStmt.setString(2, Controller.CO);
 				myStmt.setString(3, Controller.CI);
@@ -294,12 +294,12 @@ public class Booking implements Initializable{
 				myStmt.setString(5, Controller.TI);
 				myStmt.setString(6, N);
 				myStmt.setString(7, "10");
-				myStmt.setString(8, "2");
+				myStmt.setString(8, Controller.NUMBER);
 				myStmt.executeUpdate();
 				c10.setDisable(true);
 			}
 			if (c11.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto, train) values (?,?,?,?,?,?,?,?)");
+				myStmt = myConn.prepareStatement("insert into seats (date,city_out,city_in,time_out,time_in,vagon, mesto, ¹) values (?,?,?,?,?,?,?,?)");
 				myStmt.setString(1, Controller.D);
 				myStmt.setString(2, Controller.CO);
 				myStmt.setString(3, Controller.CI);
@@ -307,12 +307,12 @@ public class Booking implements Initializable{
 				myStmt.setString(5, Controller.TI);
 				myStmt.setString(6, N);
 				myStmt.setString(7, "11");
-				myStmt.setString(8, "2");
+				myStmt.setString(8, Controller.NUMBER);
 				myStmt.executeUpdate();
 				c11.setDisable(true);
 			}
 			if (c12.isSelected() == true) {
-				myStmt = myConn.prepareStatement("insert into train (date,city_out,city_in,time_out,time_in,vagon, mesto, train) values (?,?,?,?,?,?,?,?)");
+				myStmt = myConn.prepareStatement("insert into seats (date,city_out,city_in,time_out,time_in,vagon, mesto, ¹) values (?,?,?,?,?,?,?,?)");
 				myStmt.setString(1, Controller.D);
 				myStmt.setString(2, Controller.CO);
 				myStmt.setString(3, Controller.CI);
@@ -320,7 +320,7 @@ public class Booking implements Initializable{
 				myStmt.setString(5, Controller.TI);
 				myStmt.setString(6, N);
 				myStmt.setString(7, "12");
-				myStmt.setString(8, "2");
+				myStmt.setString(8, Controller.NUMBER);
 				myStmt.executeUpdate();
 				c12.setDisable(true);
 			}
